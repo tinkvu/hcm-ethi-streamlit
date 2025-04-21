@@ -3,8 +3,10 @@ import torchaudio
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 from groq import Groq
+import os
 
 st.title("Amharic Healthcare Voice Analysis")
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Upload audio file
 audio_file = st.file_uploader("Upload Amharic audio file", type=["wav", "mp3", "m4a"])
@@ -29,7 +31,9 @@ if audio_file is not None:
     st.write(transcription)
 
     # Analyze with Groq
-    client = Groq()
+    # GROQ_API_KEY = os.getenv("GROQ_API_KEY")  # Read from environment variable
+    # client = Groq(api_key=GROQ_API_KEY)
+    
     prompt = (
         "Analyse this Amharic transcription of a conversation between a Hospital receptionist and patient.\n"
         "From this conversation, output the Name, Age, Location and Key Symptoms of the patient in English. "
